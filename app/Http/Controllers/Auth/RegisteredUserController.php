@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
             'country' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:farmer,processsor,marketer,transporter,offtaker,researcher'],
+            'type' => ['required', 'in:farmer,processsor,marketer,transporter,offtaker,extension_service'],
         ], [
             'name.required_without' => 'Please enter your fullname.'
         ], [
@@ -61,7 +61,7 @@ class RegisteredUserController extends Controller
     public function createUser(Request $request)
     {
         $firstname = str($request->get('name'))->explode(' ')->first();
-        $lastname = str($request->get('name'))->explode(' ')->last(fn($n)=> $n !== $firstname);
+        $lastname = str($request->get('name'))->explode(' ')->last(fn($n) => $n !== $firstname);
 
         $user = User::create([
             'role' => 'user',

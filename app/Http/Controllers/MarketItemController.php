@@ -32,10 +32,10 @@ class MarketItemController extends Controller
         $query->when($user, function (Builder $q) use ($user, $request) {
             $q->where(function (Builder $q) use ($user) {
                 $q->whereUserId($user->id)
-                  ->orWhere('active', true);
+                    ->orWhere('active', true);
             })->where(function (Builder $q) use ($user) {
                 $q->whereUserId($user->id)
-                  ->orWhere('approved', true);
+                    ->orWhere('approved', true);
             });
         })->when(!$user, function (Builder $q) {
             $q->whereApproved(true);
@@ -57,9 +57,9 @@ class MarketItemController extends Controller
             }
         })->when($request->has('user_id'), function (Builder $q) use ($request) {
             $q->whereUserId($request->user_id)
-              ->orWhereHas('user', function ($q) use ($request) {
-                $q->where('id', $request->user_id)->orWhere('username', $request->user_id);
-              });
+                ->orWhereHas('user', function ($q) use ($request) {
+                    $q->where('id', $request->user_id)->orWhere('username', $request->user_id);
+                });
         })->latest();
 
         $marketplaces = $query->paginate($request->get('limit', '15'));
@@ -94,6 +94,7 @@ class MarketItemController extends Controller
             'city' => ['required', 'string', 'max:255'],
             'quantity' => 'required|numeric|min:1',
             'quantity_unit' => 'required|string|min:1',
+            'produce_id' => 'nullable|exists:current_prices,id',
             'active' => 'nullable|boolean',
         ]);
 
@@ -110,6 +111,7 @@ class MarketItemController extends Controller
         $item->quantity = $request->quantity;
         $item->quantity_unit = $request->quantity_unit;
         $item->active = $request->active ?? true;
+        $item->produce_id = $request->produce_id;
         $item->approved = false;
         $item->save();
 
@@ -169,6 +171,7 @@ class MarketItemController extends Controller
             'city' => ['required', 'string', 'max:255'],
             'quantity' => 'required|numeric|min:1',
             'quantity_unit' => 'required|string|min:1',
+            'produce_id' => 'nullable|exists:current_prices,id',
             'active' => 'nullable|boolean',
         ]);
 
@@ -184,6 +187,7 @@ class MarketItemController extends Controller
         $item->quantity = $request->quantity ?? $item->quantity;
         $item->quantity_unit = $request->quantity_unit ?? $item->quantity_unit;
         $item->active = $request->active ?? $item->active ?? true;
+        $item->produce_id = $request->produce_id;
         $item->approved = false;
         $item->save();
 

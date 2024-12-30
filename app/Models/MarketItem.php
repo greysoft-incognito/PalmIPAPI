@@ -51,6 +51,11 @@ class MarketItem extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function produce(): BelongsTo
+    {
+        return $this->belongsTo(CurrentPrice::class, 'produce_id');
+    }
+
     /**
      * Get the items's avatar
      *
@@ -59,7 +64,7 @@ class MarketItem extends Model
     protected function imageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->media_file,
+            get: fn() => $this->media_file,
         );
     }
 }

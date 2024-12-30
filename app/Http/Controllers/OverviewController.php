@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\EnumsAndConsts\HttpStatus;
+use App\Http\Resources\CurrentPriceCollection;
 use App\Http\Resources\UserLocationCollection;
 use App\Models\CurrentPrice;
 use App\Models\DiseaseOutbreak;
@@ -31,11 +32,11 @@ class OverviewController extends Controller
                     'marketers' => User::whereType('marketer')->count(),
                     'offtakers' => User::whereType('offtaker')->count(),
                     'processsors' => User::whereType('processsor')->count(),
-                    'researchers' => User::whereType('researcher')->count(),
                     'transporters' => User::whereType('transporter')->count(),
+                    'current_prices' => new CurrentPriceCollection(CurrentPrice::all()),
                     'disease_outbreaks' => DiseaseOutbreak::whereActive(true)->count(),
                     'soil_requirements' => SoilRequirement::query()->count(),
-                    'current_prices' => CurrentPrice::get(),
+                    'extension_service' => User::whereType('extension_service')->count(),
                 ]
             ],
         ]);

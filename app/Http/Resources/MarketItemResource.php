@@ -16,13 +16,13 @@ class MarketItemResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'qty' => $this->quantity . $this->quantity_unit,
+            'qty' => $this->quantity . ' ' . str($this->produce?->unit ?: $this->quantity_unit)->apa(),
             'name' => $this->user->fullname ?? 'Unknown',
             'type' => $this->type,
             'grade' => $this->grade,
             'price' => $this->price,
             'quantity' => $this->quantity,
-            'quantity_unit' => $this->quantity_unit,
+            'quantity_unit' => $this->produce?->unit ?: $this->quantity_unit,
             'prod_img' => $this->media_file,
             'image_url' => $this->media_file,
             'product_name' => $this->name,
@@ -33,6 +33,8 @@ class MarketItemResource extends JsonResource
             'avatar' => $this->user->avatar ?? $this->image_url,
             'user_id' => $this->user->id,
             'username' => $this->user->username,
+            'produce' => $this->produce?->item,
+            'produce_id' => $this->produce?->id,
         ];
     }
 }

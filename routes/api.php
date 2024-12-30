@@ -10,6 +10,7 @@ use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\SoilRequirementController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\CurrentPriceCollection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
 
@@ -38,6 +39,7 @@ Route::get('/init', function () {
         'status' => 'success',
         'status_code' => 200,
         'settings' => collect(config('settings'))->except(['permissions', 'system']),
+        'products' => new CurrentPriceCollection(\App\Models\CurrentPrice::all()),
         'csrf_token' => csrf_token(),
     ]);
 });
