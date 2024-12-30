@@ -65,7 +65,7 @@ class MarketItemController extends Controller
             'grade' => 'nullable|string|min:1|max:55',
             'location' => 'nullable|string|min:1',
             'address' => ['required', 'string', 'min:5', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
+            'country' => ['nullable', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'quantity' => 'required|numeric|min:1',
@@ -80,7 +80,7 @@ class MarketItemController extends Controller
         $item->grade = $request->grade;
         $item->location = $request->location;
         $item->address = $request->address;
-        $item->country = $request->country;
+        $item->country = $request->country ?? 'Nigeria';
         $item->state = $request->state;
         $item->city = $request->city;
         $item->quantity = $request->quantity;
@@ -121,7 +121,7 @@ class MarketItemController extends Controller
             'grade' => 'nullable|string|min:1|max:55',
             'location' => 'nullable|string|min:1',
             'address' => ['required', 'string', 'min:5', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
+            'country' => ['nullable', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'quantity' => 'required|numeric|min:1',
@@ -136,7 +136,7 @@ class MarketItemController extends Controller
         $item->grade = $request->grade ?? $item->grade;
         $item->location = $request->location ?? $item->location;
         $item->address = $request->address ?? $item->address;
-        $item->country = $request->country ?? $item->country;
+        $item->country = $request->country ?? $item->country ?? 'Nigeria';
         $item->state = $request->state ?? $item->state;
         $item->city = $request->city ?? $item->city;
         $item->quantity = $request->quantity ?? $item->quantity;
